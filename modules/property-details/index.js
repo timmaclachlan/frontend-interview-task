@@ -1,12 +1,17 @@
 /* eslint-disable max-statements */
-import { add, format } from "date-fns";
+import { add, format, parse } from "date-fns";
 import React, { useEffect } from "react";
 import { Button } from "../../components/button";
 import RowContainer from "../../components/row-container";
 import {
-  AccountHeadline, AccountLabel, AccountList, AccountListItem, AccountSection, InfoText, Inset
+  AccountHeadline,
+  AccountLabel,
+  AccountList,
+  AccountListItem,
+  AccountSection,
+  InfoText,
+  Inset,
 } from "./style";
-
 
 const account = {
   uid: "65156cdc-5cfd-4b34-b626-49c83569f35e",
@@ -46,36 +51,78 @@ const Detail = ({}) => {
   if (account.associatedMortgages.length) {
     mortgage = account.associatedMortgages[0];
   }
+  let valuationSincePurchase =
+    account?.recentValuation.amount - account?.originalPurchasePrice;
+  let sincePurchasePercent = (valuationSincePurchase / account?.originalPurchasePrice) * 100;
+  let annualAppreciation = sincePurchasePercent / 6;
+
+
+  const getFormatPrice = (amount) => {
+    return new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP",
+    }).format(amount);
+  };
+
+  const getFormattedDate = (dateString) => {
+    debugger;
+    let date = parse(dateString, "yyyy-MM-dd", new Date());
+    return format(date, "MMMM yyyy");
+  };
 
   return (
     <Inset>
       <AccountSection>
         <AccountLabel>Estimated Value</AccountLabel>
         <AccountHeadline>
-          {new Intl.NumberFormat("en-GB", {
-            style: "currency",
-            currency: "GBP",
-          }).format(account.recentValuation.amount)}
+          {getFormatPrice(account.recentValuation.amount)}
         </AccountHeadline>
         <AccountList>
-          <AccountListItem><InfoText>
-            {`Last updated ${format(lastUpdate, "do MMM yyyy")}`}
-          </InfoText></AccountListItem>
-          <AccountListItem><InfoText>
-            {`Next update ${format(
-              add(lastUpdate, { days: account.updateAfterDays }),
-              "do MMM yyyy"
-            )}`}
-          </InfoText></AccountListItem>
+          <AccountListItem>
+            <InfoText>
+              {`Last updated ${format(lastUpdate, "do MMM yyyy")}`}
+            </InfoText>
+          </AccountListItem>
+          <AccountListItem>
+            <InfoText>
+              {`Next update ${format(
+                add(lastUpdate, { days: account.updateAfterDays }),
+                "do MMM yyyy"
+              )}`}
+            </InfoText>
+          </AccountListItem>
         </AccountList>
+      </AccountSection>
+      <AccountSection>
+        <AccountLabel>Valuation Changes</AccountLabel>
+        <AccountListItem>
+          <InfoText>
+            Purchased for {getFormatPrice(account.originalPurchasePrice)} in{" "}
+            {getFormattedDate(account.originalPurchasePriceDate)}{" "}
+          </InfoText>
+        </AccountListItem>
+        <AccountListItem>
+          <InfoText>
+            Since Purchase {getFormatPrice(valuationSincePurchase)}
+          </InfoText>
+        </AccountListItem>
+        <AccountListItem>
+          <InfoText>Annual Appreciation {annualAppreciation}%</InfoText>
+        </AccountListItem>
       </AccountSection>
       <AccountSection>
         <AccountLabel>Property details</AccountLabel>
         <RowContainer>
           <AccountList>
-            <AccountListItem><InfoText>{account.name}</InfoText></AccountListItem>
-            <AccountListItem><InfoText>{account.bankName}</InfoText></AccountListItem>
-            <AccountListItem><InfoText>{account.postcode}</InfoText></AccountListItem>
+            <AccountListItem>
+              <InfoText>{account.name}</InfoText>
+            </AccountListItem>
+            <AccountListItem>
+              <InfoText>{account.bankName}</InfoText>
+            </AccountListItem>
+            <AccountListItem>
+              <InfoText>{account.postcode}</InfoText>
+            </AccountListItem>
           </AccountList>
         </RowContainer>
       </AccountSection>
@@ -87,15 +134,19 @@ const Detail = ({}) => {
             onClick={() => alert("You have navigated to the mortgage page")}
           >
             <AccountList>
-              <AccountListItem><InfoText>
-                {new Intl.NumberFormat("en-GB", {
-                  style: "currency",
-                  currency: "GBP",
-                }).format(
-                  Math.abs(account.associatedMortgages[0].currentBalance)
-                )}
-              </InfoText></AccountListItem>
-              <AccountListItem><InfoText>{account.associatedMortgages[0].name}</InfoText></AccountListItem>
+              <AccountListItem>
+                <InfoText>
+                  {new Intl.NumberFormat("en-GB", {
+                    style: "currency",
+                    currency: "GBP",
+                  }).format(
+                    Math.abs(account.associatedMortgages[0].currentBalance)
+                  )}
+                </InfoText>
+              </AccountListItem>
+              <AccountListItem>
+                <InfoText>{account.associatedMortgages[0].name}</InfoText>
+              </AccountListItem>
             </AccountList>
           </RowContainer>
         </AccountSection>
