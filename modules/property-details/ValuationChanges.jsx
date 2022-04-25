@@ -8,14 +8,19 @@ import {
   InfoValueChange,
 } from "./style";
 
+import { getFormattedPrice, getFormattedDate } from "../../formatUtils";
+import { getValuationIncreaseDetails } from "../accountHelpers";
+
 const ValuationChanges = ({ account }) => {
+  const valuationDetails = getValuationIncreaseDetails(account);
+
   return (
     <AccountSection>
       <AccountLabel>Valuation Changes</AccountLabel>
 
       <AccountListItem>
         <InfoText>
-          Purchased for {getFormatPrice(account.originalPurchasePrice)} in{" "}
+          Purchased for {getFormattedPrice(account.originalPurchasePrice)} in{" "}
           {getFormattedDate(account.originalPurchasePriceDate)}{" "}
         </InfoText>
       </AccountListItem>
@@ -23,14 +28,18 @@ const ValuationChanges = ({ account }) => {
         <InfoText>
           Since Purchase
           <InfoValueChange>
-            {getFormatPrice(valuationSincePurchase)} ({sincePurchasePercent}%)
+            {getFormattedPrice(valuationDetails.valuationChange)} (
+            {valuationDetails.valuationChangePercent}
+            %)
           </InfoValueChange>
         </InfoText>
       </AccountListItem>
       <AccountListItem>
         <InfoText>
           Annual Appreciation
-          <InfoValueChange>{annualAppreciation}%</InfoValueChange>
+          <InfoValueChange>
+            {valuationDetails.meanAnnualAppreciation}%
+          </InfoValueChange>
         </InfoText>
       </AccountListItem>
     </AccountSection>

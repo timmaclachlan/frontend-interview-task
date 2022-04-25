@@ -1,13 +1,15 @@
-import { calculatePercentIncrease, calculateMean } from "../mathHelpers";
+import { calculateIncrease, calculatePercent, calculateMean } from "../mathHelpers";
 
 export const getValuationIncreaseDetails = (account) => {
-  const valuationChangePercent = calculatePercentIncrease(
+  const valuationChange = calculateIncrease(account?.originalPurchasePrice, account?.recentValuation.amount);
+  const valuationChangePercent = calculatePercent(
     account?.originalPurchasePrice,
     account?.recentValuation.amount
   );
   const meanAnnualAppreciation = calculateMean(valuationChangePercent, 6);
 
   return {
+    valuationChange,
     valuationChangePercent,
     meanAnnualAppreciation,
   };

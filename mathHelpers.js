@@ -1,6 +1,9 @@
-export const calculatePercentIncrease = (originalAmount, newAmount) => {
-  const change = newAmount - originalAmount;
-  return (change / originalAmount) * 100;
+export const calculateIncrease = (originalAmount, newAmount) => {
+  return newAmount - originalAmount;
+}
+
+export const calculatePercent = (originalAmount, newAmount) => {
+  return (newAmount / originalAmount) * 100;
 }
 
 export const calculateMean = (sample, population) => {

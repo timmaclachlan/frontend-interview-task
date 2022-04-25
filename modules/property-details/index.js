@@ -12,32 +12,34 @@ import PropertyDetails from "./PropertyDetails";
 import MortgageDetails from "./MortgageDetails";
 
 const Detail = ({ }) => {
-  const [account, setAccount] = React.useState({});
+  const [data, setData] = React.useState({});
 
   useEffect(() => {
     window
       .fetch("/api/account")
       .then((res) => res.json())
       .then((data) => {
-        setAccount(data);
+        setData(data);
       });
   }, []);
 
-  return (
-    <Inset>
-      {account &&
-        <EstimatedValue account={account} />
-      }
+  if (data.account) {
+    return (
+      <Inset>
+        <EstimatedValue account={data.account} />
+        <ValuationChanges account={data.account} />
+        <MortgageDetails account={data.account} />
 
-
-      <Button
-        // This is a dummy action
-        onClick={() => alert("You have navigated to the edit account page")}
-      >
-        Edit account
-      </Button>
-    </Inset>
-  );
+        <Button
+          // This is a dummy action
+          onClick={() => alert("You have navigated to the edit account page")}
+        >
+          Edit account
+        </Button>
+      </Inset >
+    );
+  }
+  return null;
 };
 
 export default Detail;

@@ -1,5 +1,7 @@
 import React from "react";
 
+import RowContainer from "../../components/row-container";
+
 import {
   AccountLabel,
   AccountList,
@@ -8,9 +10,10 @@ import {
   InfoText,
 } from "./style";
 
-const MortgageDetails = () => {
-  return;
-  {
+const MortgageDetails = ({ account }) => {
+  const mortgage = account.associatedMortgages[0];
+
+  return (
     mortgage && (
       <AccountSection>
         <AccountLabel>Mortgage</AccountLabel>
@@ -35,8 +38,8 @@ const MortgageDetails = () => {
           </AccountList>
         </RowContainer>
       </AccountSection>
-    );
-  }
+    )
+  );
 };
 
 export default MortgageDetails;

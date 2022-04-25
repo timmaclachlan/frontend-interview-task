@@ -1,5 +1,7 @@
 
-  export const getFormatPrice = (amount) => {
+import { parse, format } from "date-fns";
+
+  export const getFormattedPrice = (amount) => {
     return new Intl.NumberFormat("en-GB", {
       style: "currency",
       currency: "GBP",

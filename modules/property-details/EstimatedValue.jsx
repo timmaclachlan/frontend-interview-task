@@ -11,32 +11,28 @@ import {
   InfoText,
 } from "./style";
 
-import { getFormatPrice } from "../../formatUtils";
+import { getFormattedPrice } from "../../formatUtils";
 
 const EstimatedValue = ({ account }) => {
+  const lastUpdate = new Date(account.lastUpdate);
   return (
     <AccountSection>
       <AccountLabel>Estimated Value</AccountLabel>
 
       <AccountHeadline>
-        {account && getFormatPrice(account.recentValuation?.amount)}
+        {account && getFormattedPrice(account.recentValuation?.amount)}
       </AccountHeadline>
       <AccountList>
         <AccountListItem>
           <InfoText>
-            {`Last updated ${format(
-              new Date(account.lastUpdate),
-              "do MMM yyyy"
-            )}`}
+            {`Last updated ${format(lastUpdate, "do MMM yyyy")}`}
           </InfoText>
         </AccountListItem>
         <AccountListItem>
-          <InfoText>
-            {`Next update ${format(
-              add(lastUpdate, { days: account.updateAfterDays }),
-              "do MMM yyyy"
-            )}`}
-          </InfoText>
+          <InfoText>{`Next update ${format(
+            add(lastUpdate, { days: account.updateAfterDays }),
+            "do MMM yyyy"
+          )}`}</InfoText>
         </AccountListItem>
       </AccountList>
     </AccountSection>
