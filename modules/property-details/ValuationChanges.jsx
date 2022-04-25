@@ -16,7 +16,7 @@ const ValuationChanges = ({ account }) => {
 
   return (
     <AccountSection>
-      <AccountLabel>Valuation Changes</AccountLabel>
+      <AccountLabel>Valuation Change</AccountLabel>
 
       <AccountListItem>
         <InfoText>

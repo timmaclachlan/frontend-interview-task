@@ -29,6 +29,7 @@ const Detail = ({ }) => {
         <EstimatedValue account={data.account} />
         <ValuationChanges account={data.account} />
         <MortgageDetails account={data.account} />
+        <PropertyDetails account={data.account} />
 
         <Button
           // This is a dummy action

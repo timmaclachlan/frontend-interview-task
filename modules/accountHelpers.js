@@ -4,7 +4,7 @@ export const getValuationIncreaseDetails = (account) => {
   const valuationChange = calculateIncrease(account?.originalPurchasePrice, account?.recentValuation.amount);
   const valuationChangePercent = calculatePercent(
     account?.originalPurchasePrice,
-    account?.recentValuation.amount
+    valuationChange
   );
   const meanAnnualAppreciation = calculateMean(valuationChangePercent, 6);
 
