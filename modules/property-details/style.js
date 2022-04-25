@@ -26,6 +26,19 @@ export const InfoText = styled.div`
   color: ${(props) => props.theme.colors.neutral[600]};
 `;
 
+export const InfoValueChange = styled.div`
+  background-color: #c2f7e1;
+  font-weight: bold;
+  color: #006b57;
+  border-radius: 20px;
+  text-align: center;
+  ${(props) =>
+    props.positiveChange &&
+    `
+        background-color: #c2f7e1;
+    `}
+`;
+
 export const AccountSection = styled.div`
   padding: ${(props) => props.theme.space.m} 0;
 
