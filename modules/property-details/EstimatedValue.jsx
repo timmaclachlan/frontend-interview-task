@@ -11,7 +11,7 @@ import {
   InfoText,
 } from "./style";
 
-import { getFormattedPrice } from "../../formatUtils";
+import { getFormattedNumber } from "../../formatUtils";
 
 const EstimatedValue = ({ account }) => {
   const lastUpdate = new Date(account.lastUpdate);
@@ -20,7 +20,7 @@ const EstimatedValue = ({ account }) => {
       <AccountLabel>Estimated Value</AccountLabel>
 
       <AccountHeadline>
-        {account && getFormattedPrice(account.recentValuation?.amount)}
+        {account && getFormattedNumber(account.recentValuation?.amount)}
       </AccountHeadline>
       <AccountList>
         <AccountListItem>

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import RowContainer from "../../components/row-container";
 
@@ -10,8 +11,13 @@ import {
   InfoText,
 } from "./style";
 
+import { getMortgage } from "../accountHelpers";
+import { getFormattedNumber } from "../../formatUtils";
+
 const MortgageDetails = ({ account }) => {
-  const mortgage = account.associatedMortgages[0];
+  let mortgage = getMortgage(account);
+
+  if (!mortgage) return null;
 
   return (
     mortgage && (
@@ -23,23 +29,20 @@ const MortgageDetails = ({ account }) => {
         >
           <AccountList>
             <AccountListItem>
-              <InfoText>
-                {new Intl.NumberFormat("en-GB", {
-                  style: "currency",
-                  currency: "GBP",
-                }).format(
-                  Math.abs(account.associatedMortgages[0].currentBalance)
-                )}
-              </InfoText>
+              <InfoText>{getFormattedNumber(mortgage.currentBalance)}</InfoText>
             </AccountListItem>
             <AccountListItem>
-              <InfoText>{account.associatedMortgages[0].name}</InfoText>
+              <InfoText>{mortgage.name}</InfoText>
             </AccountListItem>
           </AccountList>
         </RowContainer>
       </AccountSection>
     )
   );
+};
+
+MortgageDetails.propTypes = {
+  account: PropTypes.object,
 };
 
 export default MortgageDetails;

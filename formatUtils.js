@@ -1,11 +1,11 @@
 
 import { parse, format } from "date-fns";
 
-  export const getFormattedPrice = (amount) => {
+  export const getFormattedNumber = (amount) => {
     return new Intl.NumberFormat("en-GB", {
       style: "currency",
       currency: "GBP",
-    }).format(amount);
+    }).format(Math.abs(amount));
   };
 
   export const getFormattedDate = (dateString) => {
